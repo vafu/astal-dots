@@ -1,12 +1,13 @@
-import { bind } from "../../../../../usr/share/astal/gjs"
+import { bind } from "astal"
 import { range } from "../commons"
-import { obtainService } from "../services/services"
+import Service from "../services"
 import { Box, Label } from "./types"
 import Gtk from "gi://Gtk?version=4.0"
 
-export default function Workspaces() {
-    const workspaces = obtainService("workspace")
-    return <Box className="workspaces" >
+const workspaces = Service("workspace")
+
+export const Workspaces = () =>
+    <Box className="workspaces" >
         {workspaces.active_workroom().as(wr =>
             <Box>
                 {range(workspaces.getWorkroom(wr).length).map(ws => {
@@ -24,4 +25,3 @@ export default function Workspaces() {
             </Box>
         )}
     </Box>
-}

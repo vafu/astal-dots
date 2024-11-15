@@ -7,7 +7,7 @@ export interface Services {
 
 const bound = new Set<keyof Services>()
 
-export function obtainService<S extends keyof Services>(type: S): Services[S] {
+export default function obtainService<S extends keyof Services>(type: S): Services[S] {
     let service: Services[S] | null = null
     switch (type) {
         case "workspace": service = new WorkspaceService() as Services[S]

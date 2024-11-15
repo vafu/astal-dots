@@ -29,23 +29,19 @@ function bindWorkspace(workspaceService: WorkspaceService) {
         last.urgent = false
     })
 
-    hypr.workspaces
+    hypr.get_workspaces()
+        .forEach(w => getWs(w.get_id()).occupied = w.get_clients().length > 0)
 
-    // hypr.get_workspaces().forEach(w =>
-    //     getWs(w.id)
-    //         .occupied =
-    //     w.clients.length > 0
-    // )
-    //
-    // hypr.connect("client-added", s => {
-    //     hypr.workspaces.forEach(w => getWs(w.id).occupied = w.clients.length > 0)
-    // })
-    // hypr.connect("client-removed", s => {
-    //     hypr.workspaces.forEach(w => getWs(w.id).occupied = w.clients.length > 0)
-    // })
-    // hypr.connect("urgent", (s, id) => {
-    //     const wsid = s.workspaces.find(w => w.lastClient === id)?.id
-    //     if (wsid)
-    //         getWs(wsid).urgent.set(true)
-    // })
+    hypr.connect("workspace-added", (_, w) => {
+        getWs(w.get_id()).occupied = true
+    })
+    hypr.connect("workspace-removed", (_, w) => {
+        getWs(w).occupied = false
+    })
+
+    hypr.connect("urgent", (s, id) => {
+        const wsid = s.get_workspaces().find(w => w.get_last_client() === id)?.id
+        if (wsid)
+            getWs(wsid).urgent = true
+    })
 }
