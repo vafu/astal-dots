@@ -31,11 +31,11 @@ window.Bar {
         border-radius: 10px * .6;
         /* box-shadow: inset 0 0 0 1 #f0f; */
         margin: 0 10px * .5;
-        transition: 200ms;
+        transition: 200ms ;
         background: #{$theme_bg_color};
 
         &.occupied {
-            background-color: color.adjust(#0f0, $alpha: -0.2);
+            background-color: color.adjust(#070, $alpha: -0.2);
             min-width: 7pt;
             min-height: 7pt;
         }
